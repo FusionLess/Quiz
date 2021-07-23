@@ -4,6 +4,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 		
-		Quiz quiz = new Quiz(); //allows the use and recognition of the "Quiz.class" file within the main class
+		Quiz quiz = new Quiz(); //calls the Quiz.java class into the main class
 	}
 }

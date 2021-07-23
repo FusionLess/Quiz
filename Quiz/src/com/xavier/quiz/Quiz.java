@@ -55,7 +55,7 @@ public class Quiz implements ActionListener {
 		frame.setLayout(null); //allows the program to have defined sizes for objects such as the window sizes, button sizes etc.
 		frame.setResizable(false); //doesn't allow the window to be resized (just allows for neater formatting)
 		
-		textfield.setBounds(0, 0, 650, 50); //sets the size of the title boundaries for the title text (formatted as x, y, width, height)
+		textfield.setBounds(0, 0, 650, 45); //sets the size of the title boundaries for the title text (formatted as x, y, width, height)
 		textfield.setBackground(new Color(25,25,25)); //sets the colour of the title background (formatted as R, G, B)
 		textfield.setForeground(new Color(64,224,208)); //sets the colour of the text (the foreground)
 		textfield.setFont(new Font("Sans Seriff",Font.PLAIN,30)); //sets the font, the font style and the font size
@@ -64,7 +64,7 @@ public class Quiz implements ActionListener {
 		textfield.setEditable(false); //defines if the text can be edited, this case it is false therefore the text cannot be
 		textfield.setText(""); //sets the text to be displayed in the title box of the program
 		
-		textarea.setBounds(0, 50, 650, 50); //sets the size of the quesion box (just below the title box (formmated as x, y, width, height))
+		textarea.setBounds(0, 50, 650, 45); //sets the size of the quesion box (just below the title box (formmated as x, y, width, height))
 		textarea.setLineWrap(true); //defines if the text can be wrapped in the given boundaries (in this case it can be)
 		textarea.setBackground(new Color(25,25,25)); //sets the colour of the background the text will go on (formatted as R, G, B)
 		textarea.setForeground(new Color(64,224,208)); //sets the colour of the text (formatted as R, G, B)
@@ -133,6 +133,21 @@ public class Quiz implements ActionListener {
 		time_label.setHorizontalAlignment(JTextField.CENTER); //centers the text within the rectangle of the boundaries
 		time_label.setText("Timer:"); //prints the text with the given defintions to where it is supposed to go
 		
+		number_right.setBounds(225, 225, 200, 100);
+		number_right.setBackground(new Color(25, 25, 25));
+		number_right.setForeground(new Color(25, 255, 0));
+		number_right.setFont(new Font("sans seriff", Font.BOLD, 50));
+		number_right.setBorder(BorderFactory.createBevelBorder(1));
+		number_right.setHorizontalAlignment(JTextField.CENTER);
+		number_right.setEditable(false);
+		
+		percentage.setBounds(225, 325, 200, 100);
+		percentage.setBackground(new Color(25,25,25));
+		percentage.setForeground(new Color(25,255,0));
+		percentage.setFont(new Font("sans seriff", Font.BOLD, 50));
+		percentage.setHorizontalAlignment(JTextField.CENTER);
+		percentage.setEditable(false);
+		
 		frame.setVisible(true); //allows the window to be seen and become visible
 		frame.add(time_label); //adds the time_label boundaries set to the window 
 		frame.add(seconds_left); //adds the seconds_left boundaries set to the window
@@ -146,14 +161,60 @@ public class Quiz implements ActionListener {
 		frame.add(buttonD); //adds the A button to the window with it's defined values to the window
 		frame.add(textarea); //adds the the question text and its rectangle to the window
 		frame.add(textfield); //adds the title and its rectangle to the the window
+		
+		nextQuestion();
 	}
 	public void nextQuestion() { //emthod for generating the next question
 		
+		if (index >= total_questions) {
+			results(); //if the amount of questions that have been asked are now equal to the amount of questions there are in the quiz, the quiz will call the results method and display how well you did
+		}
+		else {
+			textfield.setText("Question " + (index + 1)); //increments the question (changes the textfield variable (the area where the question is displayed) and changes the question to the next one) if the previous statement is false
+			textarea.setText(questions[index]); //displays the question from the "questions" array
+			answer_labelA.setText(options[index][0]); //accesses the first object in the two-dimensional array "options" for display next to the "Ⓐ" button
+			answer_labelB.setText(options[index][1]); //accesses the second object in the two-dimensional array "options" for display next to the "Ⓑ" button
+			answer_labelC.setText(options[index][2]); //accesses the third object in the two-dimensional array "options" for display next to the "Ⓒ" button
+			answer_labelD.setText(options[index][3]); //accesses the fourth object in the two-dimensional array "options" for display next to the "Ⓓ" button
+		}
+		
 	}
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		// TODO Auto-generated method stub
+	public void actionPerformed(ActionEvent e) { //method for listening for when a button is pressed
 		
+			buttonA.setEnabled(false);
+			buttonB.setEnabled(false);
+			buttonC.setEnabled(false);
+			buttonD.setEnabled(false);
+			
+			if(e.getSource() == buttonA) { //checks if the user clicked on button A
+				answer = 'A'; //sets the users answer to A
+				if (answer == answers[index]) { //checks to see if the users answer is the same as the answer stored in the index
+					correct_guesses++; //increments the number earlier defined for "correct_guesses" by one
+				}
+			}
+			
+			if(e.getSource() == buttonB) { //checks if the user clicked on button B
+				answer = 'B'; //sets the users answer to B
+				if (answer == answers[index]) { //checks to see if the users answer is the same as the answer stored in the index
+					correct_guesses++; //increments the number earlier defined for "correct_guesses" by one
+				}
+			}
+			
+			if(e.getSource() == buttonC) { //checks if the user clicked on button C
+				answer = 'C'; //sets the users answer to C
+				if (answer == answers[index]) { //checks to see if the users answer is the same as the answer stored in the index
+					correct_guesses++; //increments the number earlier defined for "correct_guesses" by one
+				}
+			}
+			
+			if(e.getSource() == buttonD) { //checks if the user clicked on button D
+				answer = 'D'; //sets the users answer to D
+				if (answer == answers[index]) { //checks to see if the users answer is the same as the answer stored in the index
+					correct_guesses++; //increments the number earlier defined for "correct_guesses" by one
+				}
+			}
+			displayCorrectResult(); //calls "displayCorrectResult" method for the display of the correct answer
 	}
 	public void displayCorrectResult() { //method for displaying the correct result when the answer is either incorrect or correct
 		
