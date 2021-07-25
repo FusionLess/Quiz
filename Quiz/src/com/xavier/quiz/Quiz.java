@@ -7,17 +7,17 @@ import javax.swing.*;
 public class Quiz implements ActionListener {
 	
 	String[] questions = {
-							"",
+							"What is the greatest programming language of all?",
 							""
 						 }; //sets up the question for the quiz
 	
 	String[][] options = {
-							{"", "", "", ""},
+							{"Python", "Java", "Web Assembly", "Rust"},
 							{"", "", "", ""}
 						 }; //creates a two-dimensional array for the options to the question
 	
 	char[] answers = 	 {
-							' ',
+							'B',
 							' '
 						 }; //creates the array for the correct answers to every question
 	
@@ -47,6 +47,18 @@ public class Quiz implements ActionListener {
 	JTextField number_right = new JTextField(); //creates a variable for the number of questions you got correct
 	JTextField percentage = new JTextField(); //creates a variable for telling you what percentage of the quiz you got correct
 	
+	Timer timer = new Timer(1000, new ActionListener() { //when the timer reaches 1000 miliseconds, it will execute the @Override method
+		
+		@Override
+		public void actionPerformed(ActionEvent e) { //this method is performed or used for flipping the colour back to its original colour after the colour has been changed from red to green (this is to ensure it doesn't show the correct answer)
+			seconds--; //decrements seconds every one second
+			seconds_left.setText(String.valueOf(seconds)); //converts the integer "seconds_left" to a string for display
+			if(seconds <= 0) { // once the seconds hit zero, the program calls the "displayCorrectAnswer" method
+				displayCorrectResult(); //calls the displayCorrectAnswer method
+			}
+		}
+	});
+	
 	
 	public Quiz() { //creates the Quiz constructor (a fancy way of saying a method that will always run when a new object is created)
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //tells the program to exit on pressing the x button
@@ -57,7 +69,7 @@ public class Quiz implements ActionListener {
 		
 		textfield.setBounds(0, 0, 650, 45); //sets the size of the title boundaries for the title text (formatted as x, y, width, height)
 		textfield.setBackground(new Color(25,25,25)); //sets the colour of the title background (formatted as R, G, B)
-		textfield.setForeground(new Color(64,224,208)); //sets the colour of the text (the foreground)
+		textfield.setForeground(new Color(255, 255, 255)); //sets the colour of the text (the foreground)
 		textfield.setFont(new Font("Sans Seriff",Font.PLAIN,30)); //sets the font, the font style and the font size
 		textfield.setBorder(null); //sets the border around the title box (of which there is none)
 		textfield.setHorizontalAlignment(JTextField.CENTER); //aligns the text in within the title box
@@ -66,8 +78,8 @@ public class Quiz implements ActionListener {
 		
 		textarea.setBounds(0, 50, 650, 45); //sets the size of the quesion box (just below the title box (formmated as x, y, width, height))
 		textarea.setLineWrap(true); //defines if the text can be wrapped in the given boundaries (in this case it can be)
-		textarea.setBackground(new Color(25,25,25)); //sets the colour of the background the text will go on (formatted as R, G, B)
-		textarea.setForeground(new Color(64,224,208)); //sets the colour of the text (formatted as R, G, B)
+		textarea.setBackground(new Color(25, 25, 25)); //sets the colour of the background the text will go on (formatted as R, G, B)
+		textarea.setForeground(new Color(255, 255, 255)); //sets the colour of the text (formatted as R, G, B)
 		textarea.setFont(new Font("Sans Seriff",Font.PLAIN,25)); //sets the font, the style of the font and thje size
 		textarea.setBorder(null); //sets the border around the the question box (in this case it is null)
 		textarea.setEditable(false); //defines if the text within the box can be edited (in this case it cannot be)
@@ -78,6 +90,8 @@ public class Quiz implements ActionListener {
 		buttonA.setFocusable(false); //more of a cosmetic thing; doesn't allow for the text inside the box to be "focused" on or for windows or the operating system to take away your focus from a foreground app
 		buttonA.addActionListener(this); //listens for the action of clicking on the set boundaries or the clicking on the button within the set boundaries
 		buttonA.setText("Ⓐ"); //sets the text within the box of A
+		buttonA.setBackground(new Color(0, 0, 0));
+		buttonA.setBorder(BorderFactory.createBevelBorder(1));
 		
 		buttonB.setBounds(0, 200, 100, 100); //as for the A button
 		buttonB.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for the A button
@@ -133,9 +147,9 @@ public class Quiz implements ActionListener {
 		time_label.setHorizontalAlignment(JTextField.CENTER); //centers the text within the rectangle of the boundaries
 		time_label.setText("Timer:"); //prints the text with the given defintions to where it is supposed to go
 		
-		number_right.setBounds(225, 225, 200, 100);
-		number_right.setBackground(new Color(25, 25, 25));
-		number_right.setForeground(new Color(25, 255, 0));
+		number_right.setBounds(225, 225, 200, 100); //sets the boundaries for the amount of questions correct rectangle that will show at the end of the quiz
+		number_right.setBackground(new Color(25, 25, 25)); //sets the colour of the rectangle
+		number_right.setForeground(new Color(25, 255, 0)); //sets the colour of the text
 		number_right.setFont(new Font("sans seriff", Font.BOLD, 50));
 		number_right.setBorder(BorderFactory.createBevelBorder(1));
 		number_right.setHorizontalAlignment(JTextField.CENTER);
@@ -176,6 +190,7 @@ public class Quiz implements ActionListener {
 			answer_labelB.setText(options[index][1]); //accesses the second object in the two-dimensional array "options" for display next to the "Ⓑ" button
 			answer_labelC.setText(options[index][2]); //accesses the third object in the two-dimensional array "options" for display next to the "Ⓒ" button
 			answer_labelD.setText(options[index][3]); //accesses the fourth object in the two-dimensional array "options" for display next to the "Ⓓ" button
+			timer.start();
 		}
 		
 	}
@@ -218,8 +233,71 @@ public class Quiz implements ActionListener {
 	}
 	public void displayCorrectResult() { //method for displaying the correct result when the answer is either incorrect or correct
 		
+		timer.stop();
+		
+		buttonA.setEnabled(false); //disables button A so you can't click on the button multiple times and answer the question multiple times
+		buttonB.setEnabled(false); //disables button B so you can't click on the button multiple times and answer the question multiple times
+		buttonC.setEnabled(false); //disables button C so you can't click on the button multiple times and answer the question multiple times
+		buttonD.setEnabled(false); //disables button D so you can't click on the button multiple times and answer the question multiple times
+		
+		if(answers[index] != 'A') //if the answer in the index does not equal 'A', this method will execute
+			answer_labelA.setForeground(new Color(255, 0, 0)); //changes the color of the label next to A to red if the answer is incorrect
+		
+		if(answers[index] != 'B') //if the answer in the index does not equal 'B', this method will execute
+			answer_labelB.setForeground(new Color(255, 0, 0)); //changes the color of the label next to B to red if the answer is incorrect
+		
+		if(answers[index] != 'C') //if the answer in the index does not equal 'C', this method will execute
+			answer_labelC.setForeground(new Color(255, 0, 0)); //changes the color of the label next to C to red if the answer is incorrect
+
+		if(answers[index] != 'D') //if the answer in the index does not equal 'D', this method will execute
+			answer_labelD.setForeground(new Color(255, 0, 0)); //changes the color of the label next to D to red if the answer is incorrect
+		
+		Timer pause = new Timer(2000, new ActionListener() { //when the timer reaches 2000 miliseconds, it will execute the @Override method
+			
+			@Override
+			public void actionPerformed(ActionEvent e) { //this method is performed or used for flipping the colour back to its original colour after the colour has been changed from red to green (this is to ensure it doesn't show the correct answer)
+				
+				answer_labelA.setForeground(new Color(25, 255, 0)); //changes the colour back to green
+				answer_labelB.setForeground(new Color(25, 255, 0)); //changes the colour back to green
+				answer_labelC.setForeground(new Color(25, 255, 0)); //changes the colour back to green
+				answer_labelD.setForeground(new Color(25, 255, 0)); //changes the colour back to green
+				
+				answer = ' '; //resets the answer to the question
+				seconds = 10; //resets timer
+				seconds_left.setText(String.valueOf(seconds)); //converts the seconds_left variable back to a string for display once more
+				buttonA.setEnabled(true); //re-enables the button for answering of the next question
+				buttonB.setEnabled(true); //re-enables the button for answering of the next question
+				buttonC.setEnabled(true); //re-enables the button for answering of the next question
+				buttonD.setEnabled(true); //re-enables the button for answering of the next question
+				index++; //displays the next question by incrementing the index counter by one
+				nextQuestion(); //calls the nextQuestion method 
+			}
+		});
+		pause.setRepeats(false); //stops the timer (for switching colours from red to green) from running every two seconds and displaying the correct answer
+		pause.start(); //starts the timer again
+		
 	}
 	public void results() { //method for diplaying the results at the end of the quiz
+		
+		buttonA.setEnabled(false); //disables the buttons to stop people from pressing the buttons once the results have been displayed
+		buttonB.setEnabled(false); //disables the buttons to stop people from pressing the buttons once the results have been displayed
+		buttonC.setEnabled(false); //disables the buttons to stop people from pressing the buttons once the results have been displayed
+		buttonD.setEnabled(false); //disables the buttons to stop people from pressing the buttons once the results have been displayed
+		
+		results = (int)((correct_guesses / (double)total_questions) * 100);
+		
+		textfield.setText("RESULTS");
+		textarea.setText("");
+		answer_labelA.setText("");
+		answer_labelB.setText("");
+		answer_labelC.setText("");
+		answer_labelD.setText("");
+		
+		number_right.setText("(" + correct_guesses + "/" + total_questions + ")");
+		percentage.setText(results + "%");
+		
+		frame.add(percentage);
+		frame.add(number_right);
 		
 	}
 
