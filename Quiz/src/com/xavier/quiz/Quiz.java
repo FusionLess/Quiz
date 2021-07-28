@@ -31,6 +31,8 @@ public class Quiz implements ActionListener {
 	
 	//^ creates the variables that will be needed
 	
+	Main main = new Main();
+	
 	JFrame frame = new JFrame(); //creates a window for the code to run within
 	JTextField textfield = new JTextField(); //creates the varaiable for the text field which the questions and any other relating text will go
 	JTextArea textarea = new JTextArea(); //creates a variable for area where text will be filled
@@ -38,6 +40,7 @@ public class Quiz implements ActionListener {
 	JButton buttonB = new JButton(); //creates a variable for the B button
 	JButton buttonC = new JButton(); //creates a variable for the C button
 	JButton buttonD = new JButton(); //creates a variable for the D button
+	JButton playAgain = new JButton();
 	JLabel answer_labelA = new JLabel(); //creates a variable for the label for button A
 	JLabel answer_labelB = new JLabel(); //creates a variable for the label for button B
 	JLabel answer_labelC = new JLabel(); //creates a variable for the label for button C
@@ -70,7 +73,7 @@ public class Quiz implements ActionListener {
 		textfield.setBounds(0, 0, 650, 45); //sets the size of the title boundaries for the title text (formatted as x, y, width, height)
 		textfield.setBackground(new Color(25,25,25)); //sets the colour of the title background (formatted as R, G, B)
 		textfield.setForeground(new Color(255, 255, 255)); //sets the colour of the text (the foreground)
-		textfield.setFont(new Font("Sans Seriff",Font.PLAIN,30)); //sets the font, the font style and the font size
+		textfield.setFont(new Font("Comic Sans",Font.PLAIN,30)); //sets the font, the font style and the font size
 		textfield.setBorder(null); //sets the border around the title box (of which there is none)
 		textfield.setHorizontalAlignment(JTextField.CENTER); //aligns the text in within the title box
 		textfield.setEditable(false); //defines if the text can be edited, this case it is false therefore the text cannot be
@@ -80,61 +83,80 @@ public class Quiz implements ActionListener {
 		textarea.setLineWrap(true); //defines if the text can be wrapped in the given boundaries (in this case it can be)
 		textarea.setBackground(new Color(25, 25, 25)); //sets the colour of the background the text will go on (formatted as R, G, B)
 		textarea.setForeground(new Color(255, 255, 255)); //sets the colour of the text (formatted as R, G, B)
-		textarea.setFont(new Font("Sans Seriff",Font.PLAIN,25)); //sets the font, the style of the font and thje size
+		textarea.setFont(new Font("Comic Sans",Font.PLAIN,25)); //sets the font, the style of the font and thje size
 		textarea.setBorder(null); //sets the border around the the question box (in this case it is null)
 		textarea.setEditable(false); //defines if the text within the box can be edited (in this case it cannot be)
 		textarea.setText(""); //sets the text within the given boundaries
 		
 		buttonA.setBounds(0, 100, 100, 100); //sets the size of the the box for button A (formatted as x, y, width, height)
-		buttonA.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //sets the font used the text within the given boundaries of the A box
+		buttonA.setFont(new Font("Comic Sans", Font.PLAIN, 35)); //sets the font used the text within the given boundaries of the A box
 		buttonA.setFocusable(false); //more of a cosmetic thing; doesn't allow for the text inside the box to be "focused" on or for windows or the operating system to take away your focus from a foreground app
 		buttonA.addActionListener(this); //listens for the action of clicking on the set boundaries or the clicking on the button within the set boundaries
 		buttonA.setText("Ⓐ"); //sets the text within the box of A
-		buttonA.setBackground(new Color(0, 0, 0));
+		buttonA.setBackground(new Color(80, 80, 80));
+		buttonA.setForeground(new Color(255, 255, 255));
 		buttonA.setBorder(BorderFactory.createBevelBorder(1));
 		
-		buttonB.setBounds(0, 200, 100, 100); //as for the A button
-		buttonB.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for the A button
+		buttonB.setBounds(535, 100, 100, 100); //as for the A button
+		buttonB.setFont(new Font("Comic Sans", Font.PLAIN, 35)); //as for the A button
 		buttonB.setFocusable(false); //as for the A button
 		buttonB.addActionListener(this); //as for the A button
 		buttonB.setText("Ⓑ"); //as for the A button
+		buttonB.setBackground(new Color(80, 80, 80));
+		buttonB.setForeground(new Color(255, 255, 255));
+		buttonB.setBorder(BorderFactory.createBevelBorder(1));
 		
 		buttonC.setBounds(0, 300, 100, 100); //as for the A button
-		buttonC.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for the A button
+		buttonC.setFont(new Font("Comic Sans", Font.PLAIN, 35)); //as for the A button
 		buttonC.setFocusable(false); //as for the A button
 		buttonC.addActionListener(this); //as for the A button
 		buttonC.setText("Ⓒ"); //as for the A button
+		buttonC.setBackground(new Color(80, 80, 80));
+		buttonC.setForeground(new Color(255, 255, 255));
+		buttonC.setBorder(BorderFactory.createBevelBorder(1));
 		
-		buttonD.setBounds(0, 400, 100, 100); //as for the A button
-		buttonD.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for the A button
+		buttonD.setBounds(535, 300, 100, 100); //as for the A button
+		buttonD.setFont(new Font("Comic Sans", Font.PLAIN, 35)); //as for the A button
 		buttonD.setFocusable(false); //as for the A button
 		buttonD.addActionListener(this); //as for the A button
 		buttonD.setText("Ⓓ"); //as for the A button
+		buttonD.setBackground(new Color(80, 80, 80));
+		buttonD.setForeground(new Color(255, 255, 255));
+		buttonD.setBorder(BorderFactory.createBevelBorder(1));
 		
-		answer_labelA.setBounds(125, 100, 500, 100); //defines the boundaries for the answer next to the A button (formatted as a x, y, width, height in pixels)
+		playAgain.setBounds(400, 400, 100, 100); //x, y, width, height
+		playAgain.setFont(new Font("Comic Sans", Font.PLAIN, 35)); 
+		playAgain.setFocusable(false); 
+		playAgain.addActionListener(this); 
+		playAgain.setText("Play Again");
+		playAgain.setBackground(new Color(80, 80, 80));
+		playAgain.setForeground(new Color(255, 255, 255));
+		playAgain.setBorder(BorderFactory.createBevelBorder(1));
+		
+		answer_labelA.setBounds(0, 200, 500, 75); //defines the boundaries for the answer next to the A button (formatted as a x, y, width, height in pixels)
 		answer_labelA.setBackground(new Color (50, 50, 50)); //sets the colour for the rectangle (in this case it is the same as the background for blending purposes (formatted as R, G, B))
-		answer_labelA.setForeground(new Color(25, 255, 0)); //sets the colour of the text (foramtted as R, G, B)
-		answer_labelA.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //sets the font, the style and the size
+		answer_labelA.setForeground(new Color(132, 216, 198)); //sets the colour of the text (foramtted as R, G, B)
+		answer_labelA.setFont(new Font("Comic Sans", Font.ITALIC, 35)); //sets the font, the style and the size
 		
-		answer_labelB.setBounds(125, 200, 500, 100); //as for answer_labelA
+		answer_labelB.setBounds(535, 200, 500, 75); //as for answer_labelA
 		answer_labelB.setBackground(new Color (50, 50, 50)); //as for answer_labelA
-		answer_labelB.setForeground(new Color(25, 255, 0)); //as for answer_labelA
-		answer_labelB.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for answer_labelA
+		answer_labelB.setForeground(new Color(132, 216, 198)); //as for answer_labelA
+		answer_labelB.setFont(new Font("Comic Sans", Font.ITALIC, 35)); //as for answer_labelA
 		
-		answer_labelC.setBounds(125, 300, 500, 100); //as for answer_labelA
+		answer_labelC.setBounds(0, 375, 500, 100); //as for answer_labelA
 		answer_labelC.setBackground(new Color (50, 50, 50)); //as for answer_labelA
-		answer_labelC.setForeground(new Color(25, 255, 0)); //as for answer_labelA
-		answer_labelC.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for answer_labelA
+		answer_labelC.setForeground(new Color(132, 216, 198)); //as for answer_labelA
+		answer_labelC.setFont(new Font("Comic Sans", Font.ITALIC, 35)); //as for answer_labelA
 		
-		answer_labelD.setBounds(125, 400, 500, 100); //as for answer_labelA
+		answer_labelD.setBounds(535, 375, 500, 100); //as for answer_labelA
 		answer_labelD.setBackground(new Color (50, 50, 50)); //as for answer_labelA
-		answer_labelD.setForeground(new Color(25, 255, 0)); //as for answer_labelA
-		answer_labelD.setFont(new Font("Sans Seriff", Font.PLAIN, 35)); //as for answer_labelA
+		answer_labelD.setForeground(new Color(132, 216, 198)); //as for answer_labelA
+		answer_labelD.setFont(new Font("Comic Sans", Font.ITALIC, 35)); //as for answer_labelA
 		
 		seconds_left.setBounds(535, 510, 100, 100); //sets the boundaries for the timer rectangle (formatted as x, y, width, height)
 		seconds_left.setBackground(new Color(25, 25, 25)); //sets the colour of the timer box (formatted as R, G, B)
 		seconds_left.setForeground(new Color(255, 0, 0)); //sets the colour of the text within the box (in this case the time left (formatted as R, G, B))
-		seconds_left.setFont(new Font("sans seriff", Font.PLAIN, 60)); //sets the font, size and style of the time remaining
+		seconds_left.setFont(new Font("Comic Sans", Font.PLAIN, 60)); //sets the font, size and style of the time remaining
 		seconds_left.setBorder(BorderFactory.createBevelBorder(1)); //creates a border around the timer rectangle defined earlier (not a very noticeable effect)
 		seconds_left.setOpaque(true); //sets the rectangle defined to be opaque or not (the value is true meaning the rectangle is opaque)
 		seconds_left.setHorizontalAlignment(JTextField.CENTER); //aligns the text within the box (in this case it is centered)
@@ -143,14 +165,14 @@ public class Quiz implements ActionListener {
 		time_label.setBounds(535, 475, 100, 25); //sets the boundaries for label of the timer (formatted as x, y, width, height)
 		time_label.setBackground(new Color(50, 50, 50)); //sets the background of the rectangle (formatted as R, G, B)
 		time_label.setForeground(new Color(255, 0, 0)); //sets the colour of the text "timer:" (formatted as R, G, B)
-		time_label.setFont(new Font("Sans Seriff", Font.PLAIN, 20)); //sets the font, style and size 
+		time_label.setFont(new Font("Comic Sans", Font.PLAIN, 20)); //sets the font, style and size 
 		time_label.setHorizontalAlignment(JTextField.CENTER); //centers the text within the rectangle of the boundaries
 		time_label.setText("Timer:"); //prints the text with the given defintions to where it is supposed to go
 		
 		number_right.setBounds(225, 225, 200, 100); //sets the boundaries for the amount of questions correct rectangle that will show at the end of the quiz
 		number_right.setBackground(new Color(25, 25, 25)); //sets the colour of the rectangle
 		number_right.setForeground(new Color(25, 255, 0)); //sets the colour of the text
-		number_right.setFont(new Font("sans seriff", Font.BOLD, 50));
+		number_right.setFont(new Font("Comic Sans", Font.BOLD, 50));
 		number_right.setBorder(BorderFactory.createBevelBorder(1));
 		number_right.setHorizontalAlignment(JTextField.CENTER);
 		number_right.setEditable(false);
@@ -158,7 +180,7 @@ public class Quiz implements ActionListener {
 		percentage.setBounds(225, 325, 200, 100);
 		percentage.setBackground(new Color(25,25,25));
 		percentage.setForeground(new Color(25,255,0));
-		percentage.setFont(new Font("sans seriff", Font.BOLD, 50));
+		percentage.setFont(new Font("Comic Sans", Font.BOLD, 50));
 		percentage.setHorizontalAlignment(JTextField.CENTER);
 		percentage.setEditable(false);
 		
@@ -229,6 +251,13 @@ public class Quiz implements ActionListener {
 					correct_guesses++; //increments the number earlier defined for "correct_guesses" by one
 				}
 			}
+			
+			if (e.getSource() == playAgain) {
+				answer = 'P';
+				if (answer == 'p') {
+					return;
+				}
+			}
 			displayCorrectResult(); //calls "displayCorrectResult" method for the display of the correct answer
 	}
 	public void displayCorrectResult() { //method for displaying the correct result when the answer is either incorrect or correct
@@ -257,10 +286,10 @@ public class Quiz implements ActionListener {
 			@Override
 			public void actionPerformed(ActionEvent e) { //this method is performed or used for flipping the colour back to its original colour after the colour has been changed from red to green (this is to ensure it doesn't show the correct answer)
 				
-				answer_labelA.setForeground(new Color(25, 255, 0)); //changes the colour back to green
-				answer_labelB.setForeground(new Color(25, 255, 0)); //changes the colour back to green
-				answer_labelC.setForeground(new Color(25, 255, 0)); //changes the colour back to green
-				answer_labelD.setForeground(new Color(25, 255, 0)); //changes the colour back to green
+				answer_labelA.setForeground(new Color(132, 216, 198)); //changes the colour back to green
+				answer_labelB.setForeground(new Color(132, 216, 198)); //changes the colour back to green
+				answer_labelC.setForeground(new Color(132, 216, 198)); //changes the colour back to green
+				answer_labelD.setForeground(new Color(132, 216, 198)); //changes the colour back to green
 				
 				answer = ' '; //resets the answer to the question
 				seconds = 10; //resets timer
@@ -298,6 +327,7 @@ public class Quiz implements ActionListener {
 		
 		frame.add(percentage);
 		frame.add(number_right);
+		frame.add(playAgain);
 		
 	}
 
